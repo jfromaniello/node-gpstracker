@@ -6,7 +6,7 @@ var server = gpstracker.create().listen(8000, function(){
 
 server.trackers.on("connected", function(tracker){
     
-    console.log("tracker connected!", tracker.imei);
+    console.log("tracker connected with imei:", tracker.imei);
     
     tracker.on("position", function(position){
         console.log("lat", position.lat, "lng", position.lng);
