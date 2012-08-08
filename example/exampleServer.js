@@ -9,7 +9,8 @@ server.trackers.on("connected", function(tracker){
     console.log("tracker connected with imei:", tracker.imei);
     
     tracker.on("position", function(position){
-        console.log("lat", position.lat, "lng", position.lng);
+        console.log("tracker {" + tracker.imei +  "}: lat", 
+                            position.lat, "lng", position.lng);
     });
 
     tracker.trackEvery(10).seconds();
