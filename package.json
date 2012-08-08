@@ -1,0 +1,16 @@
+{
+  "author": "José F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
+  "name": "GpsTracker-Driver",
+  "description": "A server for the GPS Tracker device which doesnt have any brand or manufacturer :P",
+  "version": "0.0.1",
+  "dependencies": {
+    "mocha": "~1.3.2",
+    "should": "~1.1.0"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "scripts": {
+    "test": "node ./runtests.js"
+  },
+  "main": "./lib/server",
+}
