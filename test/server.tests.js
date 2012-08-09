@@ -24,6 +24,28 @@ describe("gps tracker server", function() {
     }); 
   });
 
+  it("should send LOAD when connecting with aditional crap chars", function(done) {
+    new Socket().connect(7000, function(){
+      this.write("\n##,imei:787878,A;");
+    }).on("data", function(data){
+      data.toString().should.eql("LOAD");
+      this.end();
+    }).on("end", function(){
+      done();
+    }); 
+  });
+
+  it("should send LOAD when connecting with aditional crap chars 2", function(done) {
+    new Socket().connect(7000, function(){
+      this.write("\n!opid##,imei:787878,A;");
+    }).on("data", function(data){
+      data.toString().should.eql("LOAD");
+      this.end();
+    }).on("end", function(){
+      done();
+    }); 
+  });
+
   it("should emit the connected event on the trackers object", function(done) {
     var s = new Socket().connect(7000, function(){
       this.write("##,imei:787878,A;");
@@ -79,6 +101,26 @@ describe("gps tracker server", function() {
     var s = new Socket().connect(7000, function(){
       this.write("##,imei:787878,A;");
       this.write(new Buffer("imei:787878,tracker,1208080907,,F,120721.000,A,3123.1244,S,06409.8181,W,100.00,0;"));
+    }).on("end", function(){
+      done();
+    });
+
+    this.server.trackers.on("connected", function(tracker){
+      tracker.on("position", function(position){
+        position.lat.should.eql(-31.385407);
+        position.lng.should.eql(-64.163635);
+        position.date.getTime().should.eql(new Date(2012, 8, 8, 9, 7).getTime());
+        position.speed.should.eql(185);
+        s.end();
+      });
+    });
+
+  });
+
+  it("should emit the position event with aditional crap characters", function(done) {
+    var s = new Socket().connect(7000, function(){
+      this.write("##,imei:787878,A;");
+      this.write(new Buffer("!\nrsimei:787878,tracker,1208080907,,F,120721.000,A,3123.1244,S,06409.8181,W,100.00,0;"));
     }).on("end", function(){
       done();
     });
