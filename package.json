@@ -5,7 +5,7 @@
     "gps", "tracker", "gis"
   ],
   "description": "A server for the 'GPS Tracker' device which doesnt have any brand or manufacturer :P",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {},
   "devDependencies": {
     "mocha": "~1.3.2",
