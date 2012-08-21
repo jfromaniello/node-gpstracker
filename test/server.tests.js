@@ -107,6 +107,7 @@ describe("gps tracker server", function() {
 
     this.server.trackers.on("connected", function(tracker){
       tracker.on("position", function(position){
+        position.imei.should.eql("787878");
         position.lat.should.eql(-31.385407);
         position.lng.should.eql(-64.163635);
         position.date.getTime().should.eql(new Date(2012, 8, 8, 9, 7).getTime());
