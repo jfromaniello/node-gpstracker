@@ -2,10 +2,10 @@
   "author": "José F. Romaniello <jfromaniello@gmail.com> (http://joseoncode.com)",
   "name": "gpstracker",
   "keywords": [
-    "gps", "tracker", "gis"
+    "gps", "tracker", "gis", "tk102", "tk102B", "tk103", "tk103B", "tk104", "tk106", "tk106B"
   ],
-  "description": "A server for the 'GPS Tracker' device which doesnt have any brand or manufacturer :P",
-  "version": "0.0.2",
+  "description": "A server for the 'GPS/GPRS Tracker' tk102, tk103, tk104 and 106",
+  "version": "0.0.3",
   "dependencies": {},
   "devDependencies": {
     "mocha": "~1.3.2",
