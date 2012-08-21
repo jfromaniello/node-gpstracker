@@ -138,6 +138,33 @@ describe("gps tracker server", function() {
 
   });
 
+  it("should respond to the heartbeat with ON", function(done) {
+    var s = new Socket().connect(7000, function(){
+      this.write("##,imei:787878,A;");
+      this.write(new Buffer("787878"));
+    }).on("data", function(chunk){
+      if(chunk.toString() === "ON" || chunk.toString().slice(-2) === "ON"){
+        s.end();        
+      }
+    }).on("end", function(){
+      done();
+    });
+  });
+
+  it("should respond to the heartbeat with ON (buffered messages)", function(done) {
+    var s = new Socket().connect(7000, function(){
+      this.write("##,imei:787878,A;");
+      this.write(new Buffer("imei:787878,tracker,1208080907,,F,120721.000,A,3123.1244,S,06409.8181,W,100.00,0;"));
+      this.write(new Buffer("787878"));
+    }).on("data", function(chunk){
+      if(chunk.toString() === "ON" || chunk.toString().slice(-2) === "ON"){
+        s.end();        
+      }
+    }).on("end", function(){
+      done();
+    });
+  });
+
 });
 
 
