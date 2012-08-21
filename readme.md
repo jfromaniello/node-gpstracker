@@ -4,7 +4,7 @@ I found this device on the internetz:
 
 suitable for an application I was writing, bought one and I did some reverse engineering with telnet to discover its protocol. The result is this small library that you can use in your projects to write your servers and listen to positioning events.
 
-After that I found an excel sheet with the protocol very bad documented. The model name of this device seems "TK102", but it seems that the protocol is the same for:
+After that I [found an excel sheet](https://github.com/jfromaniello/node-gpstracker/blob/master/docs/GPRS-Data-Protocol.xls?raw=true) with the protocol very bad documented. The model name of this device seems "TK102", but I also found that the protocol is the same for various devices:
 
 * TK102/TK102B 
 * TK103/TK103B 
