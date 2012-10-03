@@ -151,17 +151,45 @@ describe("gps tracker server", function() {
     });
   });
 
-  it("should respond to the heartbeat with ON (buffered messages)", function(done) {
+  it("should emit 'help me' without position when receiving just the help me command", function(done) {
+    var emited;
     var s = new Socket().connect(7000, function(){
       this.write("##,imei:787878,A;");
-      this.write(new Buffer("imei:787878,tracker,1208080907,,F,120721.000,A,3123.1244,S,06409.8181,W,100.00,0;"));
-      this.write(new Buffer("787878"));
-    }).on("data", function(chunk){
-      if(chunk.toString() === "ON" || chunk.toString().slice(-2) === "ON"){
-        s.end();        
-      }
+      this.write("imei:787878,help me,000000000,13554900601,L,;");
+      this.write("787878");
     }).on("end", function(){
+      emited.should.be.true;
       done();
+    });
+    this.server.trackers.on("connected", function(tracker){
+      tracker.on("help me", function(){
+        emited = true;
+        s.end();
+      });
+    });
+  });
+
+  it("should emit 'help me' and 'position' when receiving help me command", function(done) {
+    var emited;
+    var s = new Socket().connect(7000, function(){
+      this.write("##,imei:787878,A;");
+      this.write("imei:787878,help me,1208080907,,F,120721.000,A,3123.1244,S,06409.8181,W,100.00,0;");
+      this.write("787878");
+    }).on("end", function(){
+      emited.should.be.true;
+      done();
+    });
+    this.server.trackers.on("connected", function(tracker){
+      tracker.on("position", function(position){
+        position.imei.should.eql("787878");
+        position.lat.should.eql(-31.385407);
+        position.lng.should.eql(-64.163635);
+        position.date.getTime().should.eql(new Date(2012, 8, 8, 9, 7).getTime());
+        position.speed.should.eql(185);
+        emited = true;
+      }).on("help me", function(){
+        s.end();
+      });
     });
   });
 
